@@ -52,7 +52,7 @@ export default function Movies() {
                 movies.map((movie,index) => (
                 <div className="col-lg-3 my-2" key={index}>
                   <div>
-                    <Image src={`${movie.path}`}  width={300}   height="400"  alt={`${movie.title}`} />
+                    <Image src={`https://cdn.pixabay.com/photo/2019/04/24/21/55/cinema-4153289_960_720.jpg`}  width={300}   height="400"  alt={`${movie.title}`} />
                     <h5>{movie.title}</h5>
                   </div>
                 </div>

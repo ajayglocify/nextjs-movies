@@ -27,7 +27,8 @@ export async function POST(request) {
     }
 
     if (checkOld.length === 0 ) {
-      const path = await uploadFile(formData.get("files"),'uploads');
+      //const path = await uploadFile(formData.get("files"),'uploads');
+      const path = 'https://cdn.pixabay.com/photo/2019/04/24/21/55/cinema-4153289_960_720.jpg';
       const result = await collection.insertOne({
         title : formData.get('title'),
         date : formData.get('date'),

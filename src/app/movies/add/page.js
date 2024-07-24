@@ -26,7 +26,9 @@ export default function Movies() {
 
   const Data = async (data) => {
         const formData = new FormData();
-        formData.append('files',fileiMAGE);
+        if(fileiMAGE){
+          formData.append('files',fileiMAGE);
+        }
         formData.append('title',data.title);
         formData.append('date',data.date);
         data.files = fileiMAGE;
