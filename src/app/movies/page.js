@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {FaPlus} from "@react-icons/all-files/fa/FaPlus";
+import {Grid,Item} from '@mui/material';
 
 
 export default function Movies() {
@@ -44,25 +45,28 @@ export default function Movies() {
   return (
     <>
         <div className="container my-5">
-      <div className="d-flex justify-content-between"><h1 className="mb-3">Movies List <Link href="/movies/add"><FaPlus /></Link></h1>
+      <div className="d-flex justify-content-between"><h1 className="mb-3">My Movies <Link href="/movies/add"><FaPlus /></Link></h1>
       <Link className="text-white" href={"/logout"}>Logout</Link>
       </div>
-       <div className="row">
+
+
+      
+
+      
+        <Grid container spacing={3}>
             {movies.length > 0 ? (
                 movies.map((movie,index) => (
-                <div className="col-lg-3 my-2" key={index}>
-                  <Link href={`/movies/edit/${movie._id}`}>
-                  <div>
-                    <Image src={`https://cdn.pixabay.com/photo/2019/04/24/21/55/cinema-4153289_960_720.jpg`}  width={300}   height="400"  alt={`${movie.title}`} />
+                  <Grid item xs={12} sm={12} md={4} xl={3}>
+                    <Link href={`/movies/edit/${movie._id}`}>
+                    <Image src={`https://cdn.pixabay.com/photo/2019/04/24/21/55/cinema-4153289_960_720.jpg`} className="img-fluid" width={400} height={500}  alt={`${movie.title}`} />
                     <h5>{movie.title}</h5>
-                  </div>
-                  </Link>
-                </div>
+                    </Link>
+                  </Grid>
                 ))
             ) : (
-                <div className="col-lg-12">You Movie List is Empty</div>
+              <Grid item xs={12}>You Movie List is Empty</Grid>
             )}
-        </div>
+       </Grid>
     </div>
     </>
 
