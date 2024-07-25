@@ -53,7 +53,7 @@ export default function Movies() {
       
 
       
-        <Grid container spacing={3}>
+      <Grid container spacing={3}>
             {movies.length > 0 ? (
                 movies.map((movie,index) => (
                   <Grid item xs={12} sm={12} md={4} xl={3} key={index}>
@@ -66,7 +66,7 @@ export default function Movies() {
             ) : (
               <Grid item xs={12}>You Movie List is Empty</Grid>
             )}
-       </Grid>
+      </Grid>
     </div>
     </>
 
