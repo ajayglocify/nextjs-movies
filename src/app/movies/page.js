@@ -58,7 +58,7 @@ export default function Movies() {
                 movies.map((movie,index) => (
                   <Grid item xs={12} sm={12} md={4} xl={3} key={index}>
                     <Link href={`/movies/edit/${movie._id}`}>
-                    <Image src={`https://cdn.pixabay.com/photo/2019/04/24/21/55/cinema-4153289_960_720.jpg`} className="img-fluid" width={400} height={500}  alt={`${movie.title}`} />
+                    <Image src={`https://cdn.pixabay.com/photo/2019/04/24/21/55/cinema-4153289_960_720.jpg`} width="300" height="400"  alt={`${movie.title}`} />
                     <h5>{movie.title}</h5>
                     </Link>
                   </Grid>
