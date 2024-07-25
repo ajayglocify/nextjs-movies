@@ -46,7 +46,7 @@ export async function POST(request) {
   } catch (e) {
     console.error(e);
     return new NextResponse(JSON.stringify(
-      { message: 'Failed to insert Movie' }), {
+      { message: 'Failed to insert Movie' ,error: e }), {
       status: 500,
       headers: {
         'Content-Type': 'application/json',
@@ -68,22 +68,21 @@ export async function GET(request) {
     let result;
 
     if (id) {
-      
-      result = await collection.find({ _id: new ObjectId(id) }).toArray();
-      if (result) {
+      try {
+        const result = await collection.find({ _id: new ObjectId(id) }).toArray();
         return NextResponse.json({
-          movie: result,
-          message: 'success'
+          movies: result,
+          message: result.length > 0 ? 'success' : 'Movie not found'
         }, {
-          status: 200,
+          status: result.length > 0 ? 200 : 201,
         });
-      } else {
+      } catch (error) {
         return NextResponse.json({
-          message: 'Movie not found'
+          message: 'Internal Server Error',
         }, {
-          status: 404,
+          status: 500,
         });
-      }
+      }  
     } else {
       result = await collection.find().toArray();
       return NextResponse.json({
@@ -105,4 +104,71 @@ export async function GET(request) {
     });
   }
 }
-  
+
+
+
+
+export async function PUT(request) {
+  try {
+    const client = await clientPromise;
+    const db = client.db('movies');
+    const collection = db.collection('movies');
+    const formData = await request.formData();
+    const query = {_id: new ObjectId(formData.get('_id'))};
+    const checkOld = await collection.find(query).toArray();
+    let path;
+    if(formData.get('files')){
+      //path = await uploadFile(formData.get("files"),'uploads');
+      path = 'https://cdn.pixabay.com/photo/2019/04/24/21/55/cinema-4153289_960_720.jpg';
+    }else{
+      //path = await uploadFile(formData.get("files"),'uploads');
+      path = 'https://cdn.pixabay.com/photo/2019/04/24/21/55/cinema-4153289_960_720.jpg';
+    }
+
+    if (checkOld.length > 0 ) {
+      const Update = await collection.updateOne(
+        query,
+        { $set: { "title": formData.get('title'),"date":formData.get('date'),"path":path} }
+      );
+      console.log(Update,'UpdateUpdateUpdateUpdate');
+      if (Update.matchedCount === 0) {
+          return new NextResponse(JSON.stringify(
+            { message: 'No Record Found' ,error: e }), {
+            status: 404,
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+      } else if (Update.modifiedCount === 0) {
+          return NextResponse.json({
+            message: 'No changes made to records!'
+          }, {
+            status: 200
+          });
+      } else {
+        return NextResponse.json({
+          message: 'Movie Updated Successfully!'
+        }, {
+          status: 200
+        });
+      }
+    }else{
+      return new NextResponse(JSON.stringify(
+        { message: 'No Record Found' ,error: e }), {
+        status: 404,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    }
+  } catch (e) {
+    console.error(e);
+    return new NextResponse(JSON.stringify(
+      { message: 'Failed to Update Movie' ,error: e }), {
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
+}

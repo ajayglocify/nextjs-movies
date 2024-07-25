@@ -51,10 +51,12 @@ export default function Movies() {
             {movies.length > 0 ? (
                 movies.map((movie,index) => (
                 <div className="col-lg-3 my-2" key={index}>
+                  <Link href={`/movies/edit/${movie._id}`}>
                   <div>
                     <Image src={`https://cdn.pixabay.com/photo/2019/04/24/21/55/cinema-4153289_960_720.jpg`}  width={300}   height="400"  alt={`${movie.title}`} />
                     <h5>{movie.title}</h5>
                   </div>
+                  </Link>
                 </div>
                 ))
             ) : (
