@@ -1,25 +1,11 @@
 "use client";
-/*
-import 'bootstrap/dist/css/bootstrap.css';
-import {useForm} from "react-hook-form";
-import axios from 'axios';
-import {useRouter } from 'next/navigation';
-import './../../../public/assets/css/login.module.css';
-
-import Image from 'next/image';
-
-*/
-
 /* mui login imports */
 import axios from 'axios';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
@@ -28,7 +14,7 @@ import {useRouter } from 'next/navigation';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useForm} from "react-hook-form";
 import { styled } from '@mui/material/styles';
-
+import  style from './../../../public/assets/css/login.module.css';
 /* mui login end */
 
 
@@ -62,7 +48,7 @@ export default function SignIn() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
+      <Container className={style.loginPage} component="main" maxWidth="xs">
         <CssBaseline />
         <Box
           sx={{

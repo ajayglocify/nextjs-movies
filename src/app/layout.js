@@ -2,6 +2,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import 'bootstrap/dist/css/bootstrap.css';
 const inter = Inter({ subsets: ["latin"] });
+import Image from "next/image";
+import styles from './page.module.css'; // Assuming you have a CSS module
 
 export const metadata = {
   title: "Create Next App",
@@ -11,7 +13,18 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        {children}
+        <div className={styles.imageContainer}>
+          <Image 
+            src="/assets/img/bottom-shape.svg" 
+            alt="Bottom Shape" 
+            layout="responsive"
+            width={1000} // Provide a base width
+            height={500} // Provide a base height
+          />
+        </div>
+      </body>
     </html>
   );
 }
