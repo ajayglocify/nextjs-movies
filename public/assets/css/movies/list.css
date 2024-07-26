@@ -1,0 +1,13 @@
+.moviesGridBox a {
+    text-decoration: none;
+}
+
+a {
+    color: #fff;
+}
+
+.addMovieIcon,
+.logoutIcon {
+    font-size: 20px;
+    text-decoration: none;
+}

@@ -3,9 +3,9 @@ import Image from "next/image";
 import {useForm} from "react-hook-form";
 import axios from "axios";
 import React, { useCallback, useState ,useEffect } from 'react';
-import '../../.././../../public/assets/css/movies/add.css';
 import { useParams, useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
+import '../../../../../public/assets/css/movies/add.css';
 export default function Movies() {
     const [movies, setMovies] = useState([]);
     const [error,setError] =   useState("");
