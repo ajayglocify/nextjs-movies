@@ -62,11 +62,16 @@ export async function GET(request) {
    
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
+    let paged;
+    paged = searchParams.get('page');
+    if(!paged){paged = 1;}
+    let per_page; 
+    per_page = searchParams.get('per_page');
+    if(!per_page){per_page = 2;}
     const client = await clientPromise;
     const db = client.db('movies');
     const collection = db.collection('movies');
     let result;
-
     if (id) {
       try {
         const result = await collection.find({ _id: new ObjectId(id) }).toArray();
@@ -84,10 +89,13 @@ export async function GET(request) {
         });
       }  
     } else {
-      result = await collection.find().toArray();
+      result = await collection.find().skip((Number(paged) - 1) * Number(per_page)).limit(Number(per_page)).toArray();
+      let allResultsCount = await collection.find().toArray();
+      console.log(result,'sss');
       return NextResponse.json({
         movies: result,
-        message: 'success'
+        message: 'success',
+        counts : allResultsCount.length
       }, {
         status: result.length > 0 ? 200 : 204,
       });

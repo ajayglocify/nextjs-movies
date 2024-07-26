@@ -16,24 +16,24 @@ export default function Movies() {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const itemsPerPage = 1;
+  const itemsPerPage = 2;
   // Change page
   const handleChange = (event, value) => {
       setCurrentPage(value);
-      alert(value);
+      
   };
   useEffect(() => {
     // Define an async function to fetch the data
     const fetchMovies = async () => {
       try {
-        const response = await fetch('/api/movies');
+        const response = await fetch(`/api/movies?page=${currentPage}&per_page=${itemsPerPage}`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         
         const data = await response.json();
         setMovies(data.movies);
-        setTotalPages(data.movies.length);
+        setTotalPages(data.counts/itemsPerPage);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -43,7 +43,7 @@ export default function Movies() {
 
     // Call the async function
     fetchMovies();
-  }, []); // Empty dependency array means this effect runs once when the component mounts
+  }, [currentPage]); // Empty dependency array means this effect runs once when the component mounts
 
   if (loading) {
     return <div>Loading...</div>;
