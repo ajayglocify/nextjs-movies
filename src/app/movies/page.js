@@ -9,6 +9,11 @@ import {Grid,Item, Box} from '@mui/material';
 import '../../../public/assets/css/movies/list.css';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import PaginationItem from '@mui/material/PaginationItem';
+import Button from '@mui/material/Button';
+import NextLink from 'next/link';
+import { ArrowBack, ArrowForward } from  '@mui/material/Button';
+
 
 export default function Movies() {
   const [movies, setMovies] = useState([]);
@@ -16,7 +21,7 @@ export default function Movies() {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const itemsPerPage = 2;
+  const itemsPerPage = 4;
   // Change page
   const handleChange = (event, value) => {
       setCurrentPage(value);
@@ -33,7 +38,7 @@ export default function Movies() {
         
         const data = await response.json();
         setMovies(data.movies);
-        setTotalPages(data.counts/itemsPerPage);
+        setTotalPages(Math.ceil(data.counts/itemsPerPage));
       } catch (error) {
         setError(error.message);
       } finally {
@@ -52,9 +57,6 @@ export default function Movies() {
   if (error) {
     return <div>Error: {error}</div>;
   }
-
-
-
   return (
     <>
     <div className="container my-5">
@@ -99,13 +101,16 @@ export default function Movies() {
           </Grid>
         ))
       ) : (
-        <Grid item xs={12}>
-          You Movie List is Empty
+        <Grid item xs={12} sx={{ minHeight: '460px', display: 'flex',flexDirection:'column',justifyContent:'center', alignItems: 'center' }}>
+          <h1>Your Movie List is Empty.</h1>
+          <Box>
+            <Link href="/movies/add"><Button  style={{ backgroundColor: '#2BD17E',color:"#fff",marginTop:'15px',textTransform:'capitalize',padding:'10px 15px' }}>Add a new movie</Button></Link>
+          </Box>
         </Grid>
       )}
     </Grid>
-
-        <Stack spacing={2} alignItems="center" mt={4}>
+    {movies.length > 0 && totalPages>1 ? (
+        <Stack spacing={2} mt={15} alignItems="center">
           <Pagination
             count={totalPages}
             page={currentPage}
@@ -114,6 +119,7 @@ export default function Movies() {
             shape="rounded"
           />
         </Stack>
+    ):''}
     </div>
     </>
 

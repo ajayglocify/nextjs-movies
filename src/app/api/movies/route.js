@@ -91,19 +91,19 @@ export async function GET(request) {
     } else {
       result = await collection.find().skip((Number(paged) - 1) * Number(per_page)).limit(Number(per_page)).toArray();
       let allResultsCount = await collection.find().toArray();
-      console.log(result,'sss');
       return NextResponse.json({
         movies: result,
         message: 'success',
         counts : allResultsCount.length
       }, {
-        status: result.length > 0 ? 200 : 204,
+        status: 200,
       });
     }
   } catch (e) {
     console.error(e);
     return NextResponse.json({
-      message: 'Failed to get Movies'
+      message: 'Failed to get Movies',
+      error : e
     }, {
       status: 500,
       headers: {
